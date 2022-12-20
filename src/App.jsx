@@ -1,20 +1,38 @@
-import { useEffect, useState } from "react";
+import { useEffect } from "react";
+import { register, unregisterAll } from '@tauri-apps/api/globalShortcut';
+import { WebviewWindow } from '@tauri-apps/api/window';
+import { readText } from "@tauri-apps/api/clipboard";
 import "./App.css";
-import { readText, writeText } from '@tauri-apps/api/clipboard';
+import { uniqeId } from "./utils/tools";
+import { ClipboardCache } from "./utils/cache";
 
-const storageList = localStorage.getItem('clipboard-list');
+const { list: cacheList, setList: setCacheList } = new ClipboardCache();
+
+let labelName = uniqeId('clipboard');
 
 function App() {
-  const [list, setList] = useState(storageList ? JSON.parse(storageList) : []);
 
+  // 监听快捷键，自动弹出窗口
+  useEffect(() => {
+    (async () => {
+      await register('Command+Option+V', async () => {
+        handleOpenClipboardWindow();
+      });
+    })();
+    return () => {
+      unregisterAll();
+    }
+  }, []);
+
+  // 收集复制的内容
   useEffect(() => {
     const timer = setInterval(updateClipboard, 1000);
     return () => clearInterval(timer);
-  })
+  }, []);
 
   async function updateClipboard() {
     const clipboardText = await readText();
-    const repeatItem = list.find(item => item.content === clipboardText);
+    const repeatItem = cacheList.find(item => item.content === clipboardText);
     const newItem = {
       type: "text",
       content: clipboardText,
@@ -24,34 +42,37 @@ function App() {
     let newList = [newItem];
 
     if (repeatItem) {
-      newList = newList.concat(list.filter(item => item.id !== repeatItem.id));
+      newList = newList.concat(cacheList.filter(item => item.id !== repeatItem.id));
     }
     else {
-      newList = newList.concat(list);
+      newList = newList.concat(cacheList);
     }
 
-    setList(newList);
-    localStorage.setItem('clipboard-list', JSON.stringify(newList));
+    if (newList.length > 30) {
+      newList = newList.slice(0, 30);
+    }
+
+    setCacheList(newList);
   }
 
-  async function handleClick(item) {
-    await writeText(item.content);
-    updateClipboard();
+  async function handleOpenClipboardWindow() {
+    labelName = uniqeId('clipboard');
+    const clipboardWindow = new WebviewWindow(labelName, {
+      "url": "/clipboard",
+      "decorations": false,
+      "width": 500,
+      "height": 600,
+      "resizable": false
+    });
+    setTimeout(() => {
+      clipboardWindow.setFocus();
+    }, 500);
   }
 
   return (
     <div className="container">
-      <h1 className="title">CLIPBOARD</h1>
-
-      <div className="list">
-        {
-          list.map((item, index) => (
-            <div key={item.id} className="list-item" onClick={() => handleClick(item)}>
-              {item.content}
-            </div>
-          ))
-        }
-      </div>
+      <h1>CLIPBOARD</h1>
+      <p>使用 option + commond + V 查看剪贴板历史记录</p>
     </div>
   );
 }

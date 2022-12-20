@@ -1,0 +1,22 @@
+
+.title {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  background-color: #f6f6f6;
+  margin: 0;
+  height: 60px;
+  line-height: 60px;
+}
+
+.list {
+  margin-top: 60px;
+}
+.list-item {
+  cursor: pointer;
+  padding: 4px;
+}
+.list-item:hover {
+  background-color: rgba(0, 0, 0, 0.1);
+}
