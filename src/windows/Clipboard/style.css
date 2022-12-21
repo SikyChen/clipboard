@@ -1,17 +1,39 @@
+body {
+  margin: 0;
+  height: 100vh;
+  background-color: rgba(170, 201, 230, 0.95);
+  font-weight: 400;
+}
 
+::-webkit-scrollbar {
+  width: 4px;
+  height: 20px
+}
+
+::-webkit-scrollbar-thumb {
+  height: 10px;
+  border-radius: 4px;
+  background-color: rgb(62, 95, 139);
+}
+
+#root {
+  height: 100%;
+}
+.container {
+  height: 100%;
+}
 .title {
-  position: fixed;
-  top: 0;
-  left: 0;
   width: 100%;
-  background-color: #f6f6f6;
   margin: 0;
   height: 60px;
   line-height: 60px;
 }
 
 .list {
-  margin-top: 60px;
+  flex-grow: 1;
+  overflow-y: auto;
+  padding: 8px;
+  margin-bottom: 8px;
 }
 .list-item {
   cursor: pointer;

@@ -7,8 +7,13 @@ class Cache {
   }
 
   setList = (list) => {
+    list = list.filter((item) => !!item);
     this.list = list;
     localStorage.setItem(this.name, JSON.stringify(list));
+  }
+
+  getList = () => {
+    return this.list;
   }
 }
 

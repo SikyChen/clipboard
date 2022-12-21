@@ -1,10 +1,10 @@
-import { useEffect, useState } from "react";
+import { useEffect } from "react";
 import { writeText } from '@tauri-apps/api/clipboard';
 import { appWindow } from '@tauri-apps/api/window';
 import "./style.css";
 import { ClipboardCache } from "../../utils/cache";
 
-const { list } = new ClipboardCache();
+const { getList } = new ClipboardCache();
 
 export default function Clipboard() {
 
@@ -32,7 +32,7 @@ export default function Clipboard() {
 
       <div className="list">
         {
-          list.map((item, index) => (
+          getList().map((item, index) => (
             <div key={item.id} className="list-item" onClick={() => handleClick(item)}>
               {item.content}
             </div>

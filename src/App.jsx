@@ -1,16 +1,31 @@
 import { useEffect } from "react";
 import { register, unregisterAll } from '@tauri-apps/api/globalShortcut';
+import { appWindow } from '@tauri-apps/api/window';
 import { WebviewWindow } from '@tauri-apps/api/window';
 import { readText } from "@tauri-apps/api/clipboard";
 import "./App.css";
 import { uniqeId } from "./utils/tools";
 import { ClipboardCache } from "./utils/cache";
 
-const { list: cacheList, setList: setCacheList } = new ClipboardCache();
+const { getList: getCacheList, setList: setCacheList } = new ClipboardCache();
 
 let labelName = uniqeId('clipboard');
 
 function App() {
+
+  // 自动隐藏窗口
+  useEffect(() => {
+    let unlisten = () => {};
+    (async () => {
+      unlisten = await appWindow.onFocusChanged(async (e) => {
+        if (!e.payload) {
+          await appWindow.hide();
+          await appWindow.minimize();
+        }
+      });
+    })();
+    return () => unlisten();
+  }, []);
 
   // 监听快捷键，自动弹出窗口
   useEffect(() => {
@@ -32,6 +47,10 @@ function App() {
 
   async function updateClipboard() {
     const clipboardText = await readText();
+    const cacheList = getCacheList();
+
+    if (clipboardText === cacheList[0]?.content) { return; }
+
     const repeatItem = cacheList.find(item => item.content === clipboardText);
     const newItem = {
       type: "text",
@@ -62,7 +81,8 @@ function App() {
       "decorations": false,
       "width": 500,
       "height": 600,
-      "resizable": false
+      "resizable": false,
+      "transparent": true
     });
     setTimeout(() => {
       clipboardWindow.setFocus();

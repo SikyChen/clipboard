@@ -7,16 +7,15 @@
     "withGlobalTauri": false
   },
   "package": {
-    "productName": "hello-tauri",
-    "version": "0.0.0"
+    "productName": "CLIPBOARD",
+    "version": "0.0.1"
   },
   "tauri": {
     "allowlist": {
       "all": false,
       "window": {
         "all": true,
-        "setFocus": true,
-        "show": true
+        "setFocus": true
       },
       "shell": {
         "all": false,
@@ -46,7 +45,7 @@
         "icons/icon.icns",
         "icons/icon.ico"
       ],
-      "identifier": "com.tauri.dev",
+      "identifier": "com.siky.top",
       "longDescription": "",
       "macOS": {
         "entitlements": null,
@@ -70,13 +69,15 @@
     "updater": {
       "active": false
     },
+    "macOSPrivateApi": true,
     "windows": [
       {
         "fullscreen": false,
-        "height": 600,
+        "height": 400,
         "resizable": true,
         "title": "CLIPBOARD",
-        "width": 800
+        "width": 500,
+        "transparent": true
       }
     ]
   }
