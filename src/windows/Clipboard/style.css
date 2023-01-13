@@ -1,7 +1,11 @@
+html {
+  border-radius: 8px;
+}
+
 body {
   margin: 0;
   height: 100vh;
-  background-color: rgba(170, 201, 230, 0.95);
+  background-color: rgba(240, 174, 122, 0.95);
   font-weight: 400;
 }
 
@@ -13,7 +17,7 @@ body {
 ::-webkit-scrollbar-thumb {
   height: 10px;
   border-radius: 4px;
-  background-color: rgb(62, 95, 139);
+  background-color: rgb(184, 102, 38);
 }
 
 #root {
@@ -38,6 +42,8 @@ body {
 .list-item {
   cursor: pointer;
   padding: 4px;
+  white-space: normal;
+  word-break: break-all;
 }
 .list-item:hover {
   background-color: rgba(0, 0, 0, 0.1);

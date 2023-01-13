@@ -77,12 +77,15 @@ function App() {
   async function handleOpenClipboardWindow() {
     labelName = uniqeId('clipboard');
     const clipboardWindow = new WebviewWindow(labelName, {
-      "url": "/clipboard",
-      "decorations": false,
-      "width": 500,
-      "height": 600,
-      "resizable": false,
-      "transparent": true
+      url: "/clipboard",
+      decorations: false,
+      hiddenTitle: true,
+      width: 500,
+      height: 600,
+      resizable: false,
+      transparent: true,
+      focus: true,
+      alwaysOnTop: true,
     });
     setTimeout(() => {
       clipboardWindow.setFocus();
