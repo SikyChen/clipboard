@@ -48,3 +48,6 @@ body {
 .list-item:hover {
   background-color: rgba(0, 0, 0, 0.1);
 }
+.list-item-hover {
+  background-color: rgba(0, 0, 0, 0.1);
+}

@@ -43,10 +43,11 @@ fn menu_handle(app_handle: &tauri::AppHandle, event: SystemTrayEvent) {
             "hide" => {
                 let window = app_handle.get_window("main").unwrap();
                 window.hide().unwrap();
+                // focus_previous_window();
             }
             "quit" => {
                 std::process::exit(0);
-            },
+            }
             _ => {}
         },
         _ => {}

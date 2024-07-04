@@ -8,7 +8,7 @@
   },
   "package": {
     "productName": "CLIPBOARD",
-    "version": "0.0.2"
+    "version": "0.0.3"
   },
   "tauri": {
     "allowlist": {
@@ -79,7 +79,8 @@
         "width": 500,
         "transparent": true,
         "hiddenTitle": true,
-        "titleBarStyle": "Overlay"
+        "titleBarStyle": "Overlay",
+        "focus": true
       }
     ],
     "systemTray": {
