@@ -21,14 +21,14 @@ export default function Clipboard() {
     setCurrentIndex(val);
   }
 
-  const handleClose = async () => {
-    await appWindow.close();
-    // await invoke('focus_previous_window');
-  }
+  // const handleClose = async () => {
+  //   await appWindow.close();
+  //   // await invoke('focus_previous_window');
+  // }
 
   async function handleSelect(item) {
     await writeText(item.content);
-    handleClose();
+    appWindow.close();
   }
 
   // 关闭窗口
@@ -37,7 +37,7 @@ export default function Clipboard() {
     (async () => {
       unlisten = await appWindow.onFocusChanged((e) => {
         if (!e.payload) {
-          appWindow.close();
+          // appWindow.close();
         }
       });
     })();
@@ -75,19 +75,24 @@ export default function Clipboard() {
     <div className="container">
       <h1 className="title">CLIPBOARD</h1>
 
-      <div className="list">
-        {
-          listRef.current.map((item, index) => (
-            <div
-              key={item.id}
-              className={`list-item list-item-${index} ${index === currentIndex ? 'list-item-hover' : ''}`}
-              onClick={() => handleSelect(item)}
-              onMouseEnter={() => updateSelected(index)}
-            >
-              {item.content}
-            </div>
-          ))
-        }
+      <div className="content">
+        <div className="list">
+          {
+            listRef.current.map((item, index) => (
+              <div
+                key={item.id}
+                className={`list-item list-item-${index} ${index === currentIndex ? 'list-item-hover' : ''}`}
+                onClick={() => handleSelect(item)}
+                onMouseEnter={() => updateSelected(index)}
+              >
+                {item.content}
+              </div>
+            ))
+          }
+        </div>
+        <div className="detail">
+          <textarea value={listRef.current[currentIndex]?.content} disabled></textarea>
+        </div>
       </div>
     </div>
   );

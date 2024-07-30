@@ -10,3 +10,12 @@
 - [x] 2. 增加系统托盘图标
 - [ ] 3. 增加对复制富文本的支持
 - [ ] 4. 增加 Github Action 自动构建分发
+
+# 命令
+```
+# 启动
+yarn tauri dev
+
+# 打包
+yarn tauri build --target universal-apple-darwin
+```

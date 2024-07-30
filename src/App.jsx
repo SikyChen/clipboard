@@ -11,6 +11,8 @@ const { getList: getCacheList, setList: setCacheList } = new ClipboardCache();
 
 let labelName = uniqeId('clipboard');
 
+const MAX_CACHE = 100;
+
 function App() {
 
   // 自动隐藏窗口
@@ -47,6 +49,7 @@ function App() {
 
   async function updateClipboard() {
     const clipboardText = await readText();
+    console.log("😈 ~ updateClipboard ~ clipboardText:", clipboardText)
     const cacheList = getCacheList();
 
     if (clipboardText === cacheList[0]?.content) { return; }
@@ -67,8 +70,8 @@ function App() {
       newList = newList.concat(cacheList);
     }
 
-    if (newList.length > 30) {
-      newList = newList.slice(0, 30);
+    if (newList.length > MAX_CACHE) {
+      newList = newList.slice(0, MAX_CACHE);
     }
 
     setCacheList(newList);
@@ -80,7 +83,7 @@ function App() {
       url: "/clipboard",
       decorations: false,
       hiddenTitle: true,
-      width: 500,
+      width: 700,
       height: 600,
       resizable: false,
       transparent: true,
