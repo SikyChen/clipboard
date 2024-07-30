@@ -37,7 +37,7 @@ export default function Clipboard() {
     (async () => {
       unlisten = await appWindow.onFocusChanged((e) => {
         if (!e.payload) {
-          // appWindow.close();
+          appWindow.close();
         }
       });
     })();

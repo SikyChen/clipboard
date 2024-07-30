@@ -96,7 +96,7 @@ function App() {
   }
 
   return (
-    <div className="container">
+    <div className="main-container">
       <h1>CLIPBOARD</h1>
       <p>使用 option + commond + V 查看剪贴板历史记录</p>
     </div>
